@@ -28,6 +28,17 @@ footer {
    text-align: center;
    margin-top: 10%;
 }
+.nav-link{
+   color: rgb(255, 255, 255)!important;
+}
+
+#sidenavAccordion{
+   /* background-image: linear-gradient(rgb(228, 238, 237), rgb(201, 204, 209))!important; */
+   background-color: rgb(18, 82, 124)!important;
+}
+/* body{
+   background-color: darkgreen!important;
+} */
 
 /* .form {
    background-color: blue;

@@ -12,6 +12,7 @@
     <link href="<?= base_url('assets/') ?>css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="<?= base_url('assets/') ?>css/custom.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href=" <?= base_url('assets/DataTables') ?>datatables.min.css" />
+    <link rel="stylesheet" href="<?= base_url('assets/js/') ?>sweetalert2.min.css">
     <script src="<?= base_url('assets/') ?>js/all.min.js">
     </script>
     <script type="text/javascript" src="<?= base_url('assets/DataTables') ?>datatables.min.js"></script>
@@ -26,7 +27,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url('vote/operator'); ?>">e-Voting Ketua OSIS</a>
+            <a class="navbar-brand" href="<?= base_url('vote/operator'); ?>">e-voting Ketua OSIS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,7 +46,7 @@
                         <a class="nav-link" href="<?= base_url('vote/gantipass') ?>">Ganti Password</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="return confirm('Apa kamu yakin ingin keluar?');" href="<?= base_url('vote/logout') ?>">Logout</a>
+                        <a class="nav-link tombol-logout" href="<?= base_url('vote/logout') ?>">Logout</a>
                     </li>
                 </ul>
             </div>

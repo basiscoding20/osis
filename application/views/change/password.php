@@ -8,8 +8,10 @@
                 <div class="card-header">
                     Form Ubah Sandi
                 </div>
+
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
                 <?php if ($this->session->flashdata('flash')) : ?>
-                    <div class="row mt-3">
+                    <!-- <div class="row mt-3">
                         <div class="col-md-6">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <?= $this->session->flashdata('flash'); ?>
@@ -18,7 +20,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 <?php endif; ?>
                 <div class="card-body">
                     <form action="" method="post">

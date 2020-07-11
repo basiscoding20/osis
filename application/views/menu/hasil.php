@@ -53,7 +53,19 @@ foreach ($tb_kandidat as $kandidat) {
 <div class="container mt-5">
     <div id="chartContainer" style="height: 650px; width: 100%;"></div>
     <div class="row">
-        <div class="col-lg-12 mt-5">
+        <div class="col-lg-12">
+            <table align="center" border="1" class="mt-5">
+                <tr>
+                    <?php foreach ($tb_kandidat as $kan) : ?>
+                        <?php $title = $this->db->get_where('users', ['nis' => $kan['nis']])->row_array(); ?>
+                        <td class="p-2"><strong><?= $title['nama']; ?></strong> : <?= $kan['suara']; ?> suara</td>
+                    <?php endforeach; ?>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 mt-3">
             <table border="1" align="center">
                 <tr>
                     <?php foreach ($kelas as $kn) : ?>

@@ -136,16 +136,60 @@ class Siswa_model extends CI_Model
         $this->db->update('users', $data);
     }
 
-    public function editDataKandidat()
+    public function editDataKandidat($no_kandidat)
     {
+
         $data = [
             "nis" => $this->input->post('nis', true),
-            "foto" => $this->input->post('foto', true),
             "periode" => $this->input->post('periode', true),
+            "visi" => $this->input->post('visi', true),
+            "misi" => $this->input->post('misi', true)
         ];
 
-        $this->db->where('no_kandidat', $this->input->post('no_kandidat'));
+        $this->db->where('no_kandidat', $no_kandidat);
         $this->db->update('kandidat', $data);
+    }
+
+
+    public function changePassword()
+    {
+        $nis = $this->session->username;
+        $password = $this->input->post('password', true);
+        $sekarang = $this->input->post('sandi_sekarang', true);
+        $baru = $this->input->post('sandi_baru', true);
+        $konfirmasi = $this->input->post('konfirmasi_sandi', true);
+        $level = $this->session->level;
+
+        if (password_verify($sekarang, $password)) {
+            if ($konfirmasi != $baru) {
+                $this->session->set_flashdata('flash', 'Konfirmasi kata sandi <strong>Salah</strong>');
+                redirect(base_url('vote/admin'));
+            } else {
+
+                $login = [
+                    "password" => password_hash($baru, PASSWORD_BCRYPT)
+                ];
+
+                $this->db->update('t_login', $login, ['username' => $nis]);
+                $this->session->set_flashdata('flash', 'Kata sandi <strong>Diubah</strong>');
+                if ($level == 'admin') {
+                    redirect(base_url('vote/admin'));
+                } elseif ($level == 'user') {
+                    redirect(base_url('vote/user'));
+                } elseif ($level == 'operator') {
+                    redirect(base_url('vote/operator'));
+                }
+            }
+        } else {
+            $this->session->set_flashdata('flash', 'Kata sandi sekarang <strong>Salah</strong>');
+            if ($level == 'admin') {
+                redirect(base_url('vote/admin'));
+            } elseif ($level == 'operator') {
+                redirect(base_url('vote/operator'));
+            } elseif ($level == 'user') {
+                redirect(base_url('vote/user'));
+            }
+        }
     }
 
     public function ubahSandiUser()
@@ -158,10 +202,10 @@ class Siswa_model extends CI_Model
 
         if ($sekarang != $password) {
             $this->session->set_flashdata('flash', 'Kata sandi sekarang <strong>Salah</strong>');
-            redirect(base_url('vote/kataSandiUser'));
+            redirect(base_url('vote/user'));
         } elseif ($konfirmasi != $baru) {
             $this->session->set_flashdata('flash', 'Konfirmasi kata sandi <strong>Salah</strong>');
-            redirect(base_url('vote/kataSandiUser'));
+            redirect(base_url('vote/user'));
         } else {
             $user = [
                 "password" => $baru,
@@ -174,35 +218,7 @@ class Siswa_model extends CI_Model
             $this->db->update('users', $user, ['nis' => $nis]);
             $this->db->update('t_login', $login, ['username' => $nis]);
             $this->session->set_flashdata('flash', 'Kata sandi berhasil <strong>Diubah</strong>');
-            redirect(base_url('vote/kataSandiUser'));
-        }
-    }
-
-    public function changePassword()
-    {
-        $nis = $this->session->username;
-        $password = $this->input->post('password', true);
-        $sekarang = $this->input->post('sandi_sekarang', true);
-        $baru = $this->input->post('sandi_baru', true);
-        $konfirmasi = $this->input->post('konfirmasi_sandi', true);
-
-        if (password_verify($sekarang, $password)) {
-            if ($konfirmasi != $baru) {
-                $this->session->set_flashdata('flash', 'Konfirmasi kata sandi <strong>Salah</strong>');
-                redirect(base_url('vote/gantipass'));
-            } else {
-
-                $login = [
-                    "password" => password_hash($baru, PASSWORD_BCRYPT)
-                ];
-
-                $this->db->update('t_login', $login, ['username' => $nis]);
-                $this->session->set_flashdata('flash', 'Kata sandi berhasil <strong>Diubah</strong>');
-                redirect(base_url('vote/gantipass'));
-            }
-        } else {
-            $this->session->set_flashdata('flash', 'Kata sandi sekarang <strong>Salah</strong>');
-            redirect(base_url('vote/gantipass'));
+            redirect(base_url('vote/user'));
         }
     }
 

@@ -2,27 +2,25 @@
     </br>
     </br>
     <h3 text-align : center>Daftar Kandidat SMA PGRI 1 Kota Serang</h3>
+    <div class="flash-data-kandidat" data-kandidat="<?= $this->session->flashdata('flash'); ?>"></div>
     <?php if ($this->session->flashdata('flash')) : ?>
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data Kandidat <strong> berhasil</strong> <?= $this->session->flashdata('flash'); ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
     <?php endif; ?>
     <div class="row mt-5">
         <div class="col-md-6">
-            <a href="<?= base_url('vote/tambahDataKandidat'); ?>" class="btn btn-primary">Tambah Data Kandidat</a>
+            <a href="<?= base_url('vote/tambahDataKandidat'); ?>" class="btn btn-primary btn-icon-split">
+                <span class="icon">
+                    <i class="fa fa-plus"></i>
+                </span>
+                <span class="text">
+                    Tambah Data Kandidat
+                </span>
+            </a>
         </div>
     </div>
     </br>
-    <table class="table table-striped w-100 dt-responsive nowrap text-center" id="tb_siswa">
-        <thead class="thead-light">
-            <tr>
+    <table class="table table-striped w-100 dt-responsive nowrap text-center mt-4">
+        <thead class="">
+            <tr class="table-primary">
                 <th scope="col">No</th>
                 <th scope="col">NIS</th>
                 <th scope="col">Nama</th>
@@ -44,9 +42,9 @@
                     <td><?= $kandidat['periode']; ?></td>
                     <td><?= $kandidat['suara']; ?></td>
                     <td>
-                        <a href="<?= base_url(); ?>vote/detail_kandidat/<?= $kandidat['no_kandidat']; ?>" class="btn btn-success">Detail</a>
-                        <a href="<?= base_url(); ?>vote/editKandidat/<?= $kandidat['no_kandidat']; ?>" class="btn btn-dark">Edit</a>
-                        <a href="<?= base_url(); ?>vote/hapus_kandidat/<?= $kandidat['no_kandidat']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a>
+                        <a href="<?= base_url(); ?>vote/detail_kandidat/<?= $kandidat['no_kandidat']; ?>" class="btn btn-success"> <i class="fa fa-info-circle"></i> </a>
+                        <a href="<?= base_url(); ?>vote/editKandidat/<?= $kandidat['no_kandidat']; ?>" class="btn btn-dark"> <i class="fa fa-edit"></i> </a>
+                        <a href="<?= base_url(); ?>vote/hapus_kandidat/<?= $kandidat['no_kandidat']; ?>" class="btn btn-danger tombol-hapus-kandidat"> <i class="fa fa-trash"></i> </a>
                     </td>
                 </tr>
                 <?php $i++; ?>

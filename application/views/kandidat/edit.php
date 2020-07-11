@@ -8,17 +8,14 @@
                 <div class="card-body">
                     <form action="" method="post">
                         <input type="hidden" name="id" value="<?= $kandidat['nis']; ?>">
+                        <input type="hidden" name="fotolama" value="<?= $kandidat['foto']; ?>">
                         <div class="form-group">
                             <label for="nis">NIS</label>
                             <input type="hidden" name="nis" class="form-control" id="nis" placeholder="Masukkan NIS anda" value="<?= $kandidat['nis']; ?>">
                             <input disabled type="text" name="nis_disabled" class="form-control" id="nis_disabled" placeholder="Masukkan NIS anda" value="<?= $kandidat['nis']; ?>">
                             <small class=" form-text text-danger"><?= form_error('nis'); ?></small>
                         </div>
-                        <div class="form-group">
-                            <label for="foto">Foto</label>
-                            <input type="file" name="foto" class="form-control" id="foto" placeholder="upload foto" value="<?= $kandidat['foto']; ?>">
-                            <small class=" form-text text-danger"><?= form_error('foto'); ?></small>
-                        </div>
+
                         <div class="form-group">
                             <label for="visi">Visi</label>
                             <textarea class="form-control" name="visi" id="visi" cols="30" placeholder="Masukkan visi kandidat" rows="5"><?= $kandidat['visi']; ?></textarea>

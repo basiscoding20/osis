@@ -1,5 +1,5 @@
 <div class="container">
-    <a href="<?= base_url('vote/voting_kandidat') ?>" class="btn btn-warning btn-lg float-right mt-5">Hasil Sementara</a>
+    <a href="<?= base_url('vote/hasil_sementara') ?>" class="btn btn-warning btn-lg float-right mt-5">Hasil Sementara</a>
     <h2 class="index-header p-5"><b>Selamat Datang di Aplikasi E - Voting <br />SMA PGRI 1 Kota Serang</b></h2>
     <div class="row text-white mt-lg-5 p-4">
         <div class="col-lg-4 col-md-offset-1">

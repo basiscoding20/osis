@@ -35,7 +35,8 @@ class Vote extends CI_Controller
         $data['level'] = $this->session->level;
         $data['judul'] = 'E - Voting';
         $this->load->view('templates/header_operator', $data);
-        $this->load->view('home/operator');
+        $this->load->view('home/operator',  $data);
+        $this->load->view('templates/footer');
     }
 
     public function admin()
@@ -43,7 +44,7 @@ class Vote extends CI_Controller
         $data['level'] = $this->session->level;
         $data['judul'] = 'E - Voting';
         $this->load->view('templates/header', $data);
-        $this->load->view('home/admin');
+        $this->load->view('home/admin', $data);
         $this->load->view('templates/footer');
     }
 
@@ -121,7 +122,7 @@ class Vote extends CI_Controller
         $data['judul'] = 'E - Voting';
         $this->load->view('templates/header', $data);
         $this->load->view('kandidat/index');
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footer_biasa');
     }
 
     public function tambahDataKandidat()
@@ -158,12 +159,7 @@ class Vote extends CI_Controller
 
     public function voter()
     {
-        $data['x_belum'] = $this->db->query('SELECT * FROM users WHERE id_kelas = 1 AND pemilih = "n"')->num_rows();
-        $data['x_udah'] = $this->db->query('SELECT * FROM users WHERE id_kelas = 1 AND pemilih = "y"')->num_rows();
-        $data['xi_belum'] = $this->db->query('SELECT * FROM users WHERE id_kelas = 2 AND pemilih = "n"')->num_rows();
-        $data['xi_udah'] = $this->db->query('SELECT * FROM users WHERE id_kelas = 2 AND pemilih = "y"')->num_rows();
-        $data['xii_belum'] = $this->db->query('SELECT * FROM users WHERE id_kelas = 3 AND pemilih = "n"')->num_rows();
-        $data['xii_udah'] = $this->db->query('SELECT * FROM users WHERE id_kelas = 3 AND pemilih = "y"')->num_rows();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
 
         $data['tb_users'] = $this->db->get('users')->result_array();
         $data['level'] = $this->session->level;
@@ -201,6 +197,15 @@ class Vote extends CI_Controller
         $this->load->view('menu/hasil', $data);
     }
 
+    public function hasil_sementara()
+    {
+        $data['tb_kandidat'] = $this->db->get('kandidat')->result_array();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
+        $data['probabilitas'] = $this->db->get('probabilitas')->result_array();
+
+        $this->load->view('menu/hasil_sementara', $data);
+    }
+
     public function logout()
     {
         $this->session->sess_destroy();
@@ -209,9 +214,18 @@ class Vote extends CI_Controller
 
     public function hapus($nis)
     {
-        $this->Siswa_model->hapusDataSiswa($nis);
-        $this->session->set_flashdata('flash', 'Dihapus');
-        redirect(base_url('vote/siswa'));
+        $data['level'] = $this->session->level;
+        $level = $data['level'];
+
+        if ($level == "admin") {
+            $this->Siswa_model->hapusDataSiswa($nis);
+            $this->session->set_flashdata('flash', 'Dihapus');
+            redirect(base_url('vote/siswa'));
+        } else {
+            $this->Siswa_model->hapusDataSiswa($nis);
+            $this->session->set_flashdata('flash', 'Dihapus');
+            redirect(base_url('vote/siswaOp'));
+        }
     }
 
     public function edit($nis)
@@ -275,7 +289,7 @@ class Vote extends CI_Controller
         $data['kandidat'] = $this->Siswa_model->getKandidatByNo($no_kandidat);
 
         $this->form_validation->set_rules('nis', 'NIS', 'required|numeric');
-        $this->form_validation->set_rules('foto', 'Foto', 'required');
+        $this->form_validation->set_rules('foto', 'Foto');
         $this->form_validation->set_rules('visi', 'Visi', 'required');
         $this->form_validation->set_rules('misi', 'Misi', 'required');
 
@@ -284,7 +298,7 @@ class Vote extends CI_Controller
             $this->load->view('kandidat/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->Siswa_model->editDataKandidat();
+            $this->Siswa_model->editDataKandidat($no_kandidat);
             $this->session->set_flashdata('flash', 'Diedit');
             redirect(base_url('vote/kandidat'));
         }
@@ -307,14 +321,6 @@ class Vote extends CI_Controller
         redirect(base_url('vote/kandidat'));
     }
 
-    public function profile()
-    {
-    }
-
-    public function visimisi()
-    {
-    }
-
     public function voting($nis, $id)
     {
         $kandidat = $this->db->get_where('kandidat', ['nis' => $nis])->row_array();
@@ -331,11 +337,49 @@ class Vote extends CI_Controller
         $this->db->where('nis', $nis);
         $this->db->update('kandidat', $suara);
 
+        $datestring = '%d / %M / %Y - %h:%i %a';
+        // $datestring = '%Y';
+        $time = time();
+        $waktu = mdate($datestring, $time);
+
         $user = $this->session->username;
-        $pemilih = ["pemilih" => 'y'];
+        $pemilih = [
+            "pemilih" => 'y',
+            'time' => $waktu
+        ];
         $this->db->where('nis', $user);
         $this->db->update('users', $pemilih);
         redirect('vote/user');
+    }
+
+
+    public function gantipass()
+    {
+        $data['judul'] = 'E - Voting';
+        $user = $this->session->username;
+        $data['level'] = $this->session->level;
+        $level = $data['level'];
+
+        $this->form_validation->set_rules('sandi_sekarang', 'Sandi Sekarang', 'required');
+        $this->form_validation->set_rules('sandi_baru', 'Sandi Baru', 'required');
+        $this->form_validation->set_rules('konfirmasi_sandi', 'Konfirmasi Sandi', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $data['cek'] = $this->db->get_where('t_login', ['username' => $user])->row_array();
+
+            if ($level == "admin") {
+                $this->load->view('templates/header', $data);
+            } elseif ($level == "operator") {
+                $this->load->view('templates/header_operator', $data);
+            } elseif ($level == "user") {
+                $this->load->view('templates/header_user', $data);
+            }
+
+            $this->load->view('change/change_password');
+            $this->load->view('templates/footer');
+        } else {
+            $this->Siswa_model->changePassword();
+        }
     }
 
     public function kataSandiUser()
@@ -357,44 +401,16 @@ class Vote extends CI_Controller
         }
     }
 
-    public function gantipass()
-    {
-        $data['judul'] = 'E - Voting';
-        $user = $this->session->username;
-        $data['level'] = $this->session->level;
-        $level = $data['level'];
-
-        $this->form_validation->set_rules('sandi_sekarang', 'Sandi Sekarang', 'required');
-        $this->form_validation->set_rules('sandi_baru', 'Sandi Baru', 'required');
-        $this->form_validation->set_rules('konfirmasi_sandi', 'Konfirmasi Sandi', 'required');
-
-        if ($this->form_validation->run() == false) {
-            $data['cek'] = $this->db->get_where('t_login', ['username' => $user])->row_array();
-
-            if ($level == "admin") {
-                $this->load->view('templates/header', $data);
-            } elseif ($level == "operator") {
-                $this->load->view('templates/header_operator', $data);
-            }
-
-            $this->load->view('change/change_password');
-            $this->load->view('templates/footer');
-        } else {
-            $this->Siswa_model->changePassword();
-        }
-    }
     public function kelas()
     {
         $data['tb_kelas'] = $this->db->get('kelas')->result_array();
         $data['level'] = $this->session->level;
         $data['judul'] = 'Data Kelas';
-        $data['jmlSiswaKelas1'] =  $this->db->get_where('users', ['id_kelas' => '1'])->num_rows();
-        $data['jmlSiswaKelas2'] =  $this->db->get_where('users', ['id_kelas' => '2'])->num_rows();
-        $data['jmlSiswaKelas3'] =  $this->db->get_where('users', ['id_kelas' => '3'])->num_rows();
+
 
         $this->load->view('templates/header', $data);
         $this->load->view('menu/kelas');
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footer_biasa');
     }
 
     public function tambahKelas()

@@ -1,0 +1,135 @@
+<!-- saved from url=(0044)http://localhost/voting/vote/hasil_sementara -->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                exportEnabled: true,
+                title: {
+                    text: "e-Voting Ketua OSIS SMA PGRI 1 Kota Serang"
+                },
+                subtitles: [{
+
+                    text: "JL. Ciwaru Raya No.55 Serang, Cipare, Kec. Serang, Kota Serang Prov. Banten"
+                }],
+                data: [{
+                    type: "pie",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 14,
+                    indexLabel: "{label} - #percent%",
+                    yValueFormatString: "#,##0",
+                    dataPoints: [{ "label": "Gilang", "y": 2 }, { "label": "Amanda", "y": 1 }]
+                }]
+            });
+            chart.render();
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div id="chartContainer" style="height: 650px; width: 100%;">
+            <div class="canvasjs-chart-container" style="position: relative; text-align: left; cursor: auto;"><canvas
+                    class="canvasjs-chart-canvas" width="1092" height="715"
+                    style="width: 993px; height: 650px; position: absolute; user-select: none;"></canvas><canvas
+                    class="canvasjs-chart-canvas" width="1092" height="715"
+                    style="width: 993px; height: 650px; position: absolute; -webkit-tap-highlight-color: transparent; user-select: none; cursor: default;"></canvas>
+                <div class="canvasjs-chart-toolbar"
+                    style="position: absolute; right: 1px; top: 1px; border: 1px solid transparent;">
+                    <div tabindex="-1"
+                        style="position: absolute; user-select: none; cursor: pointer; right: 0px; top: 25px; min-width: 120px; outline: 0px; font-size: 14px; font-family: Arial, Helvetica, sans-serif; padding: 5px 0px; text-align: left; line-height: 10px; background-color: white; box-shadow: rgb(136, 136, 136) 2px 2px 10px; display: none;">
+                        <div style="padding: 12px 8px; background-color: white; color: black;">Print</div>
+                        <div style="padding: 12px 8px; background-color: white; color: black;">Save as JPEG</div>
+                        <div style="padding: 12px 8px; background-color: white; color: black;">Save as PNG</div>
+                    </div>
+                </div>
+                <div class="canvasjs-chart-tooltip"
+                    style="position: absolute; height: auto; box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 2px 2px; z-index: 1000; pointer-events: none; display: none; border-radius: 5px;">
+                    <div
+                        style=" width: auto;height: auto;min-width: 50px;line-height: auto;margin: 0px 0px 0px 0px;padding: 5px;font-family: Calibri, Arial, Georgia, serif;font-weight: normal;font-style: italic;font-size: 14px;color: #000000;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);text-align: left;border: 2px solid gray;background: rgba(255,255,255,.9);text-indent: 0px;white-space: nowrap;border-radius: 5px;-moz-user-select:none;-khtml-user-select: none;-webkit-user-select: none;-ms-user-select: none;user-select: none;} ">
+                        Sample Tooltip</div>
+                </div><a class="canvasjs-chart-credit" title="JavaScript Charts"
+                    style="outline:none;margin:0px;position:absolute;right:2px;top:636px;color:dimgrey;text-decoration:none;font-size:11px;font-family: Calibri, Lucida Grande, Lucida Sans Unicode, Arial, sans-serif"
+                    tabindex="-1" target="_blank" href="https://canvasjs.com/">CanvasJS.com</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-5">
+                <table border="1" align="center">
+                    <tbody>
+                        <tr>
+                            <td class="p-2"><strong>X MIPA</strong></td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Gilang</td>
+                                            <td> : </td>
+
+                                            <td>0.00 %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amanda</td>
+                                            <td> : </td>
+
+                                            <td>100.00 %</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td class="p-2"><strong>XI MIPA</strong></td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Gilang</td>
+                                            <td> : </td>
+
+                                            <td>100.00 %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amanda</td>
+                                            <td> : </td>
+
+                                            <td>0.00 %</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td class="p-2"><strong>XII IPS</strong></td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Gilang</td>
+                                            <td> : </td>
+
+                                            <td>100.00 %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amanda</td>
+                                            <td> : </td>
+
+                                            <td>0.00 %</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container mt-5 text-center">
+
+
+        </div>
+    </div>
+    <script src="<?= base_url('assets/js/canvasjs.min.js') ?>"></script>

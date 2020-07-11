@@ -9,10 +9,6 @@
                 </div>
                 <div class="card-body">
                     <form action="" method="post">
-                        <div class="">
-                            <label for="id_kelas">Id_Kelas</label>
-                            <input readonly type="text" value="" name="id_kelas" class="form-control" id="id_kelas">
-                        </div>
                         <div class="mt-3">
                             <label for="nama_kelas">Nama Kelas</label>
                             <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" placeholder="Masukkan nama kelas">

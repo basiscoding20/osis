@@ -6,6 +6,8 @@
     <h2>SMA PGRI 1 Kota Serang</h2>
 </div>
 </br>
+<div class="flash-data-password" data-password="<?= $this->session->flashdata('flash'); ?>"></div>
+
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
